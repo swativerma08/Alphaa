@@ -1,0 +1,217 @@
+/* 3D Animated Popup Styles for Nodes */
+
+.node-popup-container {
+  pointer-events: auto;
+  position: relative;
+  /* Perspective added for 3D unfold effect */
+  perspective: 1200px;
+}
+
+.node-popup {
+  background: rgba(15, 15, 25, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 2rem;
+  width: 400px;
+  color: white;
+  transform-style: preserve-3d;
+  /* Initial state for animation */
+  transform: rotateX(-90deg) translateZ(50px);
+  opacity: 0;
+  transform-origin: top center;
+  animation: unfold3D 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.node-popup.closing {
+  animation: fold3D 0.4s cubic-bezier(0.8, 0, 0.8, 0.2) forwards;
+}
+
+@keyframes unfold3D {
+  0% {
+    transform: rotateX(-90deg) translateZ(50px);
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: rotateX(0deg) translateZ(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fold3D {
+  0% {
+    transform: rotateX(0deg) translateZ(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: rotateX(90deg) translateZ(50px);
+    opacity: 0;
+  }
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.popup-header h3 {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.popup-close-btn {
+  background: rgba(15, 23, 42, 0.08);
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  color: #475569;
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-left: 0.5rem;
+}
+
+.popup-close-btn:hover,
+.popup-close-btn:active {
+  background: rgba(15, 23, 42, 0.16);
+  color: #0f172a;
+  transform: rotate(90deg);
+}
+
+.popup-content p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.node-sign-btn {
+  background: rgba(10, 10, 15, 0.8);
+  border: 1.5px solid;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+  animation: pulse-sign 2s infinite alternate;
+  pointer-events: auto;
+  /* ensure it's clickable */
+}
+
+.node-sign-btn:hover {
+  transform: scale(1.2);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+@keyframes pulse-sign {
+  0% {
+    box-shadow: 0 0 5px currentColor;
+  }
+
+  100% {
+    box-shadow: 0 0 15px currentColor;
+  }
+}
+
+/* Light Theme for 3D Node Cards */
+body.light-theme .node-popup {
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(2, 132, 199, 0.25);
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.12), 0 0 20px rgba(2, 132, 199, 0.1);
+  color: #0f172a;
+}
+
+body.light-theme .popup-header {
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+body.light-theme .popup-header h3 {
+  color: #0f172a;
+}
+
+body.light-theme .popup-close-btn {
+  background: rgba(15, 23, 42, 0.06);
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  color: #475569;
+}
+
+body.light-theme .popup-close-btn:hover {
+  background: rgba(15, 23, 42, 0.14);
+  color: #0f172a;
+}
+
+body.light-theme .popup-content p {
+  color: #334155;
+}
+
+body.light-theme .node-sign-btn {
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+}
+
+/* Keep the 3D HTML layer visually stable while the card unfolds. */
+.node-popup-container,
+.node-popup,
+.node-popup * {
+  box-sizing: border-box;
+}
+
+.node-popup {
+  width: min(390px, 86vw);
+  max-height: min(65vh, 520px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  user-select: text;
+  will-change: transform, opacity;
+  padding: 1.5rem;
+}
+
+@media (max-width: 600px) {
+  .node-popup {
+    width: min(320px, 88vw);
+    max-height: min(60vh, 440px);
+    padding: 1.15rem 1rem;
+    border-radius: 14px;
+  }
+
+  .popup-header h3 {
+    font-size: 1.05rem;
+  }
+
+  .popup-content p {
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+
+  .popup-close-btn {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+  }
+}

@@ -12,6 +12,7 @@ const Footer = ({ onOpenPrivacy, onOpenTerms }) => {
           <div className="footer-top">
             <div className="footer-brand">
               <a href="#" className="logo" aria-label="AlphaaTechify home">
+                <img src="/logo-icon.png" alt="AlphaaTechify Logo" className="logo-image" />
                 <span className="logo-text text-gradient">ALPHAATECHIFY</span>
               </a>
 
